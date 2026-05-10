@@ -1,6 +1,7 @@
+import sys
 import pygame
 
-from logger import log_state
+from logger import log_state, log_event
 from constants import SCREEN_HEIGHT, SCREEN_WIDTH
 from player import Player
 from asteroid import Asteroid
@@ -37,6 +38,12 @@ def main():
                 return
         screen.fill(color='black')
         updatable.update(dt)
+
+        for a in asteroids:
+            if a.collides_with(player):
+                log_event("player_hit")
+                print("Game over!")
+                sys.exit()
         
         for object in drawable:
             object.draw(screen)
