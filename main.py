@@ -1,5 +1,4 @@
 import asyncio
-import sys
 import pygame
 
 #from logger import log_state, log_event
@@ -13,11 +12,15 @@ async def main():
     print(f"Starting Asteroids with pygame version: {pygame.version.ver}")
     print(f"Screen width: {SCREEN_WIDTH}")
     print(f"Screen height: {SCREEN_HEIGHT}")
-    
-    pygame.init()
-    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    print("BEFORE DISPLAY INIT", flush=True)
+    pygame.display.init()
+    print("AFTER DISPLAY INIT", flush=True)
 
-    clock = pygame.time.Clock()
+    print("BEFORE SET MODE", flush=True)
+    screen = pygame.display.set_mode((SCREEN_WIDTH, SCREEN_HEIGHT))
+    print("AFTER SET MODE", flush=True)
+
+    #clock = pygame.time.Clock()
     dt = 0
 
 
@@ -51,7 +54,7 @@ async def main():
                 #log_event("player_hit")
                 print("Game over!")
                 print(f"Final Score: {score}")
-                #sys.exit()
+                return
             for s in shots:
                 if a.collides_with(s):
                     #log_event("asteroid_shot")
@@ -63,8 +66,8 @@ async def main():
             object.draw(screen)
 
         pygame.display.flip()
-        time = clock.tick(60)
-        dt = time/1000
+        #time = clock.tick(60)
+        dt = 1/60
 
         
         await asyncio.sleep(1 / 60)
