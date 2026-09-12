@@ -1,6 +1,6 @@
 import random
 import pygame
-from logger import log_event
+#from .logger import log_event
 from circleshape import CircleShape
 from constants import ASTEROID_MIN_RADIUS, LINE_WIDTH
 
@@ -18,7 +18,7 @@ class Asteroid(CircleShape):
         self.kill()
         if self.radius <= ASTEROID_MIN_RADIUS:
             return
-        log_event("asteroid_split")
+        #log_event("asteroid_split")
         rot = random.uniform(20,50)
         vec1 = self.velocity.rotate(rot)
         vec2 = self.velocity.rotate(rot*-1)
