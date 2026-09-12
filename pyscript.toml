@@ -1,0 +1,11 @@
+
+[files]
+"assets/fonts/DepartureMono-Regular.otf" = "/assets/fonts/DepartureMono-Regular.otf"
+"main.py" = "main.py"
+"player.py" = "player.py"
+"asteroid.py" = "asteroid.py"
+"asteroidfield.py" = "asteroidfield.py"
+"circleshape.py" = "circleshape.py"
+"shot.py" = "shot.py"
+"constants.py" = "constants.py"
+"logger.py" = "logger.py"
