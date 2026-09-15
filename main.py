@@ -10,7 +10,7 @@ from powerup import PowerUp
 import powerup
 from powerupfield import PowerUpField
 from shot import Shot
-from displayfunctions import display_score, title_screen
+from displayfunctions import display_score, title_screen, game_over
 
 def main():
     print(f"Starting Asteroids with pygame version: {pygame.version.ver}")
@@ -45,17 +45,31 @@ def main():
     Shot.containers = (shots, updatable, drawable)
     
     score = 0
-
+    is_game_over = False
+    
     while True:
+
         #log_state()
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 return
             
+        if is_game_over:
+            gamestate = game_over(screen, score)
+            is_game_over = False
+            score = 0
+            for a in asteroids:
+                a.kill()
+            for p in powerups:
+                p.kill()
+            for s in shots:
+                s.kill()
+            player.kill()
+            player = Player(x=SCREEN_WIDTH/2, y=SCREEN_HEIGHT/2, font=text_font)
+
         if gamestate == GameState.TITLE:
             gamestate, username = title_screen(screen)
             player.set_username(username)
-
         
         if gamestate == GameState.GAME:
             screen.fill(color='black')
@@ -69,10 +83,8 @@ def main():
             for a in asteroids:
                 if a.collides_with(player):
                     #log_event("player_hit")
-                    print("Game over!")
-                    print(f"Final Score: {score}")
-                    gamestate == GameState.TITLE
-                    return
+                    is_game_over = True
+                    break
 
                 for s in shots:
                     if a.collides_with(s):
@@ -81,9 +93,9 @@ def main():
                         a.split()
                         score += 100
 
+
             for object in drawable:
                 object.draw(screen)
-
 
             display_score(
                 screen,

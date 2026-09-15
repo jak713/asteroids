@@ -1,5 +1,6 @@
+import sys
 import pygame
-from constants import FONT, SCORE_FONT_SIZE, SCORE_COORDINATES, FONT_COLOUR, BUTTON_FONT_SIZE, BACKGROUND_COLOUR, SCREEN_HEIGHT, SCREEN_WIDTH
+from constants import FONT, PROMPT_TEXT_FONT_SIZE, SCORE_FONT_SIZE, SCORE_COORDINATES, FONT_COLOUR, BUTTON_FONT_SIZE, BACKGROUND_COLOUR, SCORE_PROMPT_FONT_SIZE, SCREEN_HEIGHT, SCREEN_WIDTH
 from button import Button
 from gamestate import GameState
 
@@ -55,4 +56,33 @@ def title_screen(screen: pygame.Surface) -> tuple[GameState, str]:
 
         screen.blit(input_surface, input_surface.get_rect(center=(SCREEN_WIDTH/2, SCREEN_HEIGHT/2-100))) 
 
+        pygame.display.flip()
+
+def game_over(screen:pygame.Surface, score:int) -> GameState:
+    background = screen.copy()
+    font = pygame.font.Font(FONT, PROMPT_TEXT_FONT_SIZE)
+    prompt = font.render("GAME OVER", True, "red")
+    second_prompt = font.render("PRESS ANY KEY TO CONTINUE", True, "red")
+
+    smaller_font = pygame.font.Font(FONT, SCORE_PROMPT_FONT_SIZE)
+    score_text = smaller_font.render(f"Score: {score}", True, "red")
+
+
+    prompt_rect = prompt.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2))
+    second_prompt_rect = second_prompt.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2+30))
+    score_rect = score_text.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + 60))
+
+    while True:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                pygame.quit()
+                sys.exit()
+            elif event.type == pygame.KEYDOWN:
+                return GameState.TITLE
+
+        screen.blit(background, (0, 0))
+        screen.blit(score_text, score_rect)
+        if pygame.time.get_ticks() // 500 % 2 == 0:  # changes every half a second
+            screen.blit(prompt, prompt_rect)
+            screen.blit(second_prompt, second_prompt_rect)
         pygame.display.flip()

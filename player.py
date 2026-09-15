@@ -32,6 +32,7 @@ class Player(CircleShape):
         self.name = self.font.render(self.username, False, "white")
         self.name_rect = self.name.get_rect(midbottom=(self.position[0], self.position[1]-20))
         pygame.draw.polygon(screen, "white", coords, LINE_WIDTH)
+        screen.blit(self.name, self.name_rect)
 
     def rotate(self, dt):
         self.rotation += PLAYER_TURN_SPEED * dt
