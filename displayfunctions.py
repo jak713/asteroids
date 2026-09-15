@@ -68,7 +68,7 @@ def game_over(screen:pygame.Surface, score:int) -> GameState:
     score_text = smaller_font.render(f"Score: {score}", True, "red")
 
 
-    prompt_rect = prompt.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2))
+    prompt_rect = prompt.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 - 20))
     second_prompt_rect = second_prompt.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2+30))
     score_rect = score_text.get_rect(center=(SCREEN_WIDTH / 2, SCREEN_HEIGHT / 2 + 60))
 
